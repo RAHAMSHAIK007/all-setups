@@ -1,3 +1,6 @@
+#INSTALLING PREREQUISTES
+apt install wget unzip vim curl gcc openssl build-essential libgd-dev libssl-dev libapache2-mod-php php-gd php apache2 -y
+
 #INSTALL NAGIOS CORE:
 export VER="4.4.6"
 curl -SL https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-$VER/nagios-$VER.tar.gz | tar -xzf -
