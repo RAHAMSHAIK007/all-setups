@@ -12,3 +12,5 @@ su - sonar
 #run this on server 
 sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh start
 sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh status
+
+#echo "user=admon & password=admin"
