@@ -56,3 +56,21 @@ sudo systemctl daemon-reload && sudo systemctl enable prometheus
 sudo systemctl start prometheus && sudo systemctl status prometheus --no-pager
 
 #GRAFANA
+wget -q -O gpg.key https://rpm.grafana.com/gpg.key
+sudo rpm --import gpg.key
+sudo cat <<EOF | tee /etc/yum.repos.d/grafana.repo
+[grafana]
+name=grafana
+baseurl=https://rpm.grafana.com
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://rpm.grafana.com/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+EOF
+
+exclude=*beta*
+yum install grafana -y
+systemctl start grafana.servive
+systemctl status grafana.servive
