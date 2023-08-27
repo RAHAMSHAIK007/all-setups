@@ -8,7 +8,7 @@ useradd sonar
 chown sonar:sonar sonarqube-8.9.6.50800 -R
 chmod 777 sonarqube-8.9.6.50800 -R
 su - sonar
-cd /opt
-cd sonarqube-8.9.6.50800/bin/linux/
-./sonar.sh start
-./sonar status
+
+#run this on server 
+sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh start
+sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh status
