@@ -73,5 +73,5 @@ EOF
 
 exclude=*beta*
 yum install grafana -y
-systemctl start grafana.servive
-systemctl status grafana.servive
+systemctl start grafana-server.service
+systemctl status grafana-server.service
