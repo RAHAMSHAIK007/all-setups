@@ -1,3 +1,7 @@
+#vim .bashrc
+#export PATH=$PATH:/usr/local/bin
+#source .bashrc
+
 yum install docker -y
 systemctl start docker
 systemctl status docker
