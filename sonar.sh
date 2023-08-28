@@ -9,8 +9,9 @@ chown sonar:sonar sonarqube-8.9.6.50800 -R
 chmod 777 sonarqube-8.9.6.50800 -R
 su - sonar
 
-#run this on server 
-#sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh start
-#sudo sh /opt/sonarqube-8.9.6.50800/bin/linux/sonar.sh status
+#run this on server manually
+cd /opt/sonarqube-8.9.6.50800/bin/linux/
+sh sonar.sh start
+sh sonar.sh status
 
 #echo "user=admon & password=admin"
