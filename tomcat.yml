@@ -1,19 +1,19 @@
-- hosts: dev
+- hosts: test
 
   tasks:
     - name: download tomcat from dlcdn
       get_url:
-        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz"
+        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz"
         dest: "/root/"
 
     - name: untar the apache file
-      command: tar -zxvf apache-tomcat-9.0.80.tar.gz
+      command: tar -zxvf apache-tomcat-9.0.83.tar.gz
         #unarchive:
-        #src: "apache-tomcat-9.0.80.tar.gz"
+        #src: "apache-tomcat-9.0.83.tar.gz"
         #dest: "/root/"
 
     - name: rename the tomcat
-      command: mv apache-tomcat-9.0.80 tomcat
+      command: mv apache-tomcat-9.0.83 tomcat
       tags: abc
 
     - name: install java
