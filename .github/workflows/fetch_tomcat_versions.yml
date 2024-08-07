@@ -2,7 +2,7 @@ name: Fetch Tomcat Versions
 
 on:
   schedule:
-    - cron: '0 0 */3 * *' # Runs at midnight on every 15th day of the month
+    - cron: '0 0 */2 * *' # Runs at midnight on every 15th day of the month
 
 jobs:
   fetch_tomcat_versions:
