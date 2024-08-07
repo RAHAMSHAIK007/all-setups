@@ -90,7 +90,7 @@ TOMCAT_USER_CONFIG="/opt/tomcat/conf/tomcat-users.xml"
 log "Configuring Tomcat users..."
 sudo sed -i '56  a\<role rolename="manager-gui"/>' $TOMCAT_USER_CONFIG
 sudo sed -i '57  a\<role rolename="manager-script"/>' $TOMCAT_USER_CONFIG
-sudo sed -i '58  a\<user username="apachetomcat" password="'"$password"'" roles="manager-gui,manager-script"/>' $TOMCAT_USER_CONFIG
+sudo sed -i '58  a\<user username="tomcat" password="'"$password"'" roles="manager-gui,manager-script"/>' $TOMCAT_USER_CONFIG
 sudo sed -i '59  a\</tomcat-users>' $TOMCAT_USER_CONFIG
 sudo sed -i '56d' $TOMCAT_USER_CONFIG
 sudo sed -i '21d' /opt/tomcat/webapps/manager/META-INF/context.xml
@@ -103,7 +103,7 @@ log "Starting Tomcat..."
 # Save Tomcat credentials
 log "Saving Tomcat credentials..."
 sudo tee /opt/tomcreds.txt > /dev/null <<EOF
-username:apachetomcat
+username:tomcat
 password:tomcat123
 tomcat path:/opt/tomcat
 portnumber:8080
