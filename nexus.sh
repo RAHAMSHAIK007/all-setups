@@ -2,7 +2,7 @@
 
 sudo yum update -y
 sudo yum install wget -y
-sudo yum install java-1.8.0-openjdk.x86_64 -y
+sudo yum install java-17-amazon-corretto
 sudo mkdir /app && cd /app
 sudo wget -O nexus.tar.gz https://download.sonatype.com/nexus/3/latest-unix.tar.gz
 sudo tar -xvf nexus.tar.gz
