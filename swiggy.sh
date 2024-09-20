@@ -1,3 +1,4 @@
+#! /bin/bash
 yum install httpd git -y
 systemctl start httpd
 systemctl status httpd
