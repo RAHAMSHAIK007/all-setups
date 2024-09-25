@@ -1,0 +1,22 @@
+#app deployment script
+
+apt update -y
+apt install nginx git -y
+systemctl start nginx
+git clone https://github.com/devops0014/static-cycle-website-jenkins-docker-.git
+cd static-cycle-website-jenkins-docker-.git
+cp -r * /var/www/html/
+
+#Get the ip:
+tail -f /var/log/nginx/access.log  | awk '{print $1}' 
+
+
+
+#blockip script
+echo "Enter IP to block:"
+read abc
+
+# Basic IP validation
+    sed -i "14i deny $abc/32;" /etc/nginx/nginx.conf
+    systemctl restart nginx
+    echo "IP $abc blocked."
