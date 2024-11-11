@@ -3,7 +3,7 @@
 # Note: This script has been tested on an Ubuntu server 22.04 LTS (HVM) and Amazon Linux 2 AMI (HVM). Testing on Rhel instance is currently in progress.
 
 # Latest version successfully fetched 
-TOMCAT_VERSION=11.0.0
+TOMCAT_VERSION=11.0.1
 # Previous Versions : 9.0.97, 10.1.31
 
 # Extracting major version from fetched version
