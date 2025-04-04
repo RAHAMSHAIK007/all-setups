@@ -2,15 +2,15 @@
   tasks:
     - name: download tomcat from dlcdn
       get_url:
-        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.98/bin/apache-tomcat-9.0.98.tar.gz"
+        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.102/bin/apache-tomcat-9.0.102.tar.gz"
         dest: "/root/"
 
     - name: untar the apache file
-      command: tar -zxvf apache-tomcat-9.0.98.tar.gz
+      command: tar -zxvf apache-tomcat-9.0.102.tar.gz
 
 
     - name: rename the tomcat
-      command: mv apache-tomcat-9.0.98 tomcat
+      command: mv apache-tomcat-9.0.102 tomcat
       tags: abc
 
     - name: install java
