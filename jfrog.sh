@@ -1,7 +1,7 @@
 #! /bin/bash
-wget https://releases.jfrog.io/artifactory/artifactory-rpms/artifactory-rpms.repo -O jfrog-artifactory-rpms.repo
-mv jfrog-artifactory-rpms.repo /etc/yum.repos.d/
-yum update -y
-yum install jfrog-artifactory-oss -y
-systemctl start artifactory.service
-systemctl status artifactory.service
+sudo yum update -y
+sudo yum install java-1.8* -y
+sudo wget https://jfrog.bintray.com/artifactory/jfrog-artifactory-oss-6.9.6.zip
+sudo yum install unzip -y
+sudo unzip  jfrog-artifactory-oss-6.9.6.zip
+sudo sh jfrog-artifactory-oss-6.9.6/bin/artifactory.sh start
