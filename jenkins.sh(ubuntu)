@@ -1,0 +1,38 @@
+#!/bin/bash
+# Jenkins Installation Script for Ubuntu/Debian
+
+set -e
+
+echo "---- Updating system ----"
+sudo apt update -y
+sudo apt upgrade -y
+
+echo "---- Installing Java (JDK 11) ----"
+sudo apt install -y openjdk-11-jdk
+
+echo "---- Adding Jenkins repository ----"
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+echo "---- Updating system after adding Jenkins repo ----"
+sudo apt update -y
+
+echo "---- Installing Jenkins ----"
+sudo apt install -y jenkins
+
+echo "---- Enabling Jenkins service ----"
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
+echo "---- Checking Jenkins status ----"
+sudo systemctl status jenkins --no-pager
+
+echo "---- Jenkins installed successfully ----"
+echo "Access Jenkins at: http://<your-server-ip>:8080"
+echo "Initial admin password:"
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
