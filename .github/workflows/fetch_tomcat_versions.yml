@@ -1,0 +1,38 @@
+name: Fetch Tomcat Versions
+
+on:
+  schedule:
+    - cron: '0 0 */1 * *' # Runs at midnight every day. =
+
+jobs:
+  fetch_tomcat_versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch latest Tomcat versions
+        run: |
+          MAJOR_VERSION=$(curl -s https://dlcdn.apache.org/tomcat/ | grep -oP 'tomcat-[0-9]+' | sort -V | tail -1 | grep -oP '[0-9]+')
+          LATEST_VERSION=$(curl -s https://dlcdn.apache.org/tomcat/tomcat-${MAJOR_VERSION}/ | grep -oP 'v\d+\.\d+\.\d+.*?/' | sort -V | tail -n 1 | sed 's/\/$//')
+          LATEST9=$(curl -s https://dlcdn.apache.org/tomcat/tomcat-9/ | grep -oP 'v\d+\.\d+\.\d+.*?/' | sort -V | tail -n 1 | sed 's/\/$//')
+          LATEST10=$(curl -s https://dlcdn.apache.org/tomcat/tomcat-10/ | grep -oP 'v\d+\.\d+\.\d+.*?/' | sort -V | tail -n 1 | sed 's/\/$//')
+          echo "Latest Tomcat Version: ${LATEST_VERSION}"
+          TOMCAT_VERSION=$(echo "${LATEST_VERSION}" | cut -c 2-)
+          # Update the shell script with the fetched values
+          sed -i "6 c TOMCAT_VERSION=${TOMCAT_VERSION}" apache-tomcat.sh
+           sed -i "7 c # Previous Versions : $(echo "${LATEST9}" | cut -c 2-), $(echo "${LATEST10}" | cut -c 2-)" apache-tomcat.sh
+
+      - name: Commit updated Tomcat versions
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add apache-tomcat.sh
+          if ! git diff --cached --quiet; then
+            echo "Tomcat version differs, updating apache-tomcat.sh files..."
+            git commit -m "Update version in apache-tomcat.sh"
+            git push
+          else
+            echo "No changes detected, skipping commit."
+          fi
