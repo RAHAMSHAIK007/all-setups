@@ -8,5 +8,5 @@ mv kops-linux-amd64 /usr/local/bin/kops
 echo "export PATH=$PATH:/usr/local/bin/" >> source .bashrc
 
 export KOPS_STATE_STORE=s3://cloudanddevopsbyraham0073456.k8s.local
-kops create cluster --name rahamss.k8s.local --zones ap-south-1a --control-plane-image ami-0f918f7e67a3323f0 --control-plane-count=1 --control-plane-size t2.large --image ami-0f918f7e67a3323f0 --node-count=2 --node-size t2.medium
-kops update cluster --name rahams.k8s.local --yes --admin
+kops create cluster --name rahamss.k8s.local --zones ap-south-1a --control-plane-image ami-02b8269d5e85954ef  --control-plane-count=1 --control-plane-size c7i-flex.large --image ami-02b8269d5e85954ef  --node-count=2 --node-size c7i-flex.large
+kops update cluster --name rahamss.k8s.local --yes --admin
