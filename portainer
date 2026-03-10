@@ -1,0 +1,12 @@
+PORTAINER:
+it is a container organizer, designed to make tasks easier, whether they are clustered or not. 
+abel to connect multiple clusters, access the containers, migrate stacks between clusters
+it is not a testing environment mainly used for production routines in large companies.
+Portainer consists of two elements, the Portainer Server and the Portainer Agent. 
+Both elements run as lightweight Docker containers on a Docker engine
+
+Must have swarm mode and all ports enable with docker engine
+curl -L https://downloads.portainer.io/ce2-16/portainer-agent-stack.yml -o portainer-agent-stack.yml
+docker stack deploy -c portainer-agent-stack.yml portainer
+ docker ps
+public-ip of swamr master:9000

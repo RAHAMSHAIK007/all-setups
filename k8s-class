@@ -1,0 +1,40 @@
+STEP-0: CREATE EC2 AND S3 BUCKET ON SAME REGION (bucket name: -----------.k8s.local)
+
+STEP-1: INSTALL CLI & GIVING PERMISSIONS (IAM)
+
+KOps Is a third party tool if it want to create infrastructure on aws
+aws need to give permission for it so we can use IAM user to allocate permission for the kops tool
+
+IAM -- > USER -- > CREATE USER -- > NAME: KOPS -- > Attach Polocies Directly -- > AdministratorAccess -- > NEXT -- > CREATE USER
+USER -- > SECURTITY CREDENTIALS -- > CREATE ACCESS KEYS -- > CLI -- > CHECKBOX -- >  CREATE ACCESS KEYS -- > DOWNLOAD
+
+GIVING THE KEYS
+
+apt update -y && apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws configure (run this command on server)
+
+SETP-2: INSTALL KUBECTL AND KOPS
+
+
+curl -LO https://dl.k8s.io/release/v1.35.0/bin/linux/amd64/kubectl
+wget https://github.com/kubernetes/kops/releases/download/v1.25.0/kops-linux-amd64
+
+chmod +x kops-linux-amd64 kubectl
+mv kubectl /usr/local/bin/kubectl
+mv kops-linux-amd64 /usr/local/bin/kops
+
+
+
+export KOPS_STATE_STORE=s3://give your bucket name
+
+SETP-5: CREATING THE CLUSTER
+
+kops create cluster --name rahamss.k8s.local --zones us-east-1a --master-image  ami-0360c520857e3138f  --master-count 1 --master-size c7i-flex.large --node-image ami-0360c520857e3138f --node-count=2 --node-size c7i-flex.large
+
+
+kops update cluster --name rahams.k8s.local --yes --admin
+
+kops validate cluster --wait 10m
