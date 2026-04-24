@@ -19,14 +19,10 @@ global:
   scrape_interval: 10s
 
 scrape_configs:
-  - job_name: 'prometheus_metrics'
+  - job_name: 'metrics'
     scrape_interval: 5s
     static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'node_exporter_metrics'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9100','worker-1:9100','worker-2:9100']
+      - targets: ['']
 EOF
 
 
