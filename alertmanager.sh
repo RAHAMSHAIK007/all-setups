@@ -21,6 +21,7 @@ sudo mv alertmanager-${VERSION}.linux-amd64/alertmanager ${INSTALL_DIR}/
 sudo mv alertmanager-${VERSION}.linux-amd64/amtool ${INSTALL_DIR}/
 
 # Create user (if not exists)
+sudo useradd alertmanager
 id -u ${USER} &>/dev/null || sudo useradd -rs /bin/false ${USER}
 
 # Create directories
