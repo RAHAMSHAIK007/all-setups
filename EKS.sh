@@ -63,7 +63,6 @@ eksctl create nodegroup \
   --cluster=kscluster \
   --region=us-east-1 \
   --name=aws-eks-cluster \
-  --version=1.36 \
   --node-type=t3.medium \
   --nodes=3 \
   --node-volume-size=20 \
