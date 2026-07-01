@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# AWS EKS Setup Script (UPDATED)
+# AWS EKS Setup Script (UPDATED - Kubernetes 1.36)
 set -e
 
 echo "Updating system..."
@@ -20,9 +20,9 @@ fi
 
 echo ">>> Run 'aws configure' manually if not configured"
 
-# Install kubectl (latest stable)
-echo "Installing kubectl..."
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# Install kubectl (v1.36.0)
+echo "Installing kubectl v1.36.0..."
+curl -LO "https://dl.k8s.io/release/v1.36.0/bin/linux/amd64/kubectl"
 chmod +x kubectl
 sudo mv -f kubectl /usr/local/bin/
 
@@ -38,11 +38,12 @@ sudo mv -f /tmp/eksctl /usr/local/bin
 
 eksctl version
 
-# Create EKS Cluster
+# Create EKS Cluster (Kubernetes version 1.36)
 eksctl create cluster \
   --name=kscluster \
   --region=us-east-1 \
   --zones=us-east-1a,us-east-1b \
+  --version=1.36 \
   --without-nodegroup
 
 # Associate IAM OIDC Provider
@@ -57,11 +58,12 @@ eksctl create addon \
   --cluster kscluster \
   --region us-east-1
 
-# Create Nodegroup (UPDATED NAME + SCALING)
+# Create Nodegroup (Kubernetes version 1.36)
 eksctl create nodegroup \
   --cluster=kscluster \
   --region=us-east-1 \
   --name=aws-eks-cluster \
+  --version=1.36 \
   --node-type=t3.medium \
   --nodes=3 \
   --node-volume-size=20 \
