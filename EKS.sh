@@ -87,9 +87,11 @@ echo "EKS Setup Completed!"
 #----------------------------------------
 # Deleting commands for eks
 #----------------------------------------
-#eksctl delete cluster --name kscluster --region us-east-1
-#rm -rf ~/.kube/config
+#eksctl delete nodegroup --cluster=kscluster --name=aws-eks-cluster --region=us-east-1
+#eksctl delete cluster --name=kscluster --region=us-east-1
+#rm -rf ~/.kube
 #sudo rm -f /usr/local/bin/eksctl
 #sudo rm -f /usr/local/bin/kubectl
 #sudo rm -rf /usr/local/aws-cli
 #sudo rm -f /usr/local/bin/aws
+#sudo rm -f /usr/local/bin/aws_completer
