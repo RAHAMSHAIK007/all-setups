@@ -13,7 +13,7 @@ kubectl get pods -A
 
 sleep 10
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply --server-side --force-conflicts -k https://github.com/argoproj/argo-cd/manifests/crds\?ref\=stable
 kubectl get pods -n argocd
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
 kubectl get svc argocd-server -n argocd
