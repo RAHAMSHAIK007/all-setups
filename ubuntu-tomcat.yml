@@ -1,0 +1,51 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: install Java 17 and dependencies
+      apt:
+        name:
+          - openjdk-17-jdk
+          - curl
+          - tar
+        state: present
+        update_cache: yes
+
+    - name: create tomcat installation directory structure
+      file:
+        path: /opt/tomcat
+        state: directory
+        mode: '0755'
+
+    - name: download and extract Tomcat 9 securely
+      unarchive:
+        src: "https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.115/bin/apache-tomcat-9.0.115.tar.gz"
+        dest: /opt/tomcat
+        remote_src: yes
+        extra_opts: [--strip-components=1]
+        creates: /opt/tomcat/bin/startup.sh
+
+    - name: configure roles permissions inside tomcat-users.xml
+      template:
+        src: tomcat-users.xml
+        dest: /opt/tomcat/conf/tomcat-users.xml
+        mode: '0600'
+
+    - name: allow remote dashboard manager access via context.xml
+      template:
+        src: context.xml
+        dest: /opt/tomcat/webapps/manager/META-INF/context.xml
+        mode: '0644'
+
+    - name: ensure execution permissions exist on control binaries
+      file:
+        path: "{{ item }}"
+        mode: '0755'
+      loop:
+        - /opt/tomcat/bin/startup.sh
+        - /opt/tomcat/bin/shutdown.sh
+        - /opt/tomcat/bin/catalina.sh
+
+    - name: execute Tomcat startup script
+      shell: /opt/tomcat/bin/startup.sh
+      environment:
+        JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
