@@ -1,0 +1,56 @@
+# 1. Switch to root user
+sudo -i
+# 2. Set the appropriate hostname (Uncomment and run ONE of these per server relative to its role)
+hostnamectl set-hostname ansible
+hostnamectl set-hostname dev-1
+hostnamectl set-hostname dev-2
+hostnamectl set-hostname test-1
+hostnamectl set-hostname test-2
+# 3. Re-login to apply hostname changes in your terminal prompt
+sudo -i
+# 4. Set the root password (required for initial ssh-copy-id)
+passwd root
+# 5. Enable root login and password authentication over SSH
+# (Uncomments 'PermitRootLogin yes' and 'PasswordAuthentication yes' in main config)
+sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/#PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+# NOTE: If you have drop-in files in /etc/ssh/sshd_config.d/, you must ensure they 
+# don't override these settings. Run this to check and fix them if needed:
+sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config.d/*.conf 2>/dev/null
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config.d/*.conf 2>/dev/null
+# 6. Restart SSH service to apply changes
+systemctl restart sshd
+systemctl status sshd --no-pager
+# 7. Note down the Private IP of the server
+echo "Your Private IP is:"
+hostname -I
+# ==============================================================================
+# ANSIBLE CONTROL NODE SETUP (Execute ONLY on the ANSIBLE Server)
+# ==============================================================================
+# 1. Update Ubuntu package repositories
+apt update -y
+# 2. Install Ansible and Python 3 prerequisites 
+# (Ubuntu natively includes Ansible in its main universe repositories)
+apt install ansible python3-pip python3-dev -y
+# 3. Create the ansible configuration directory if it doesn't exist
+mkdir -p /etc/ansible
+# 4. Configure the Inventory File
+# Generating the hosts file directly using a Here-Doc block
+vim /etc/ansible/hosts
+[dev]
+172.31.20.40
+172.31.21.25
+[test]
+172.31.31.77
+172.31.22.114
+# 5. Establish SSH Trust (Passwordless SSH)
+# Generate the SSH Keypair (Press Enter 4 times to accept defaults, or use the non-interactive flag below)
+ssh-keygen
+# Copy your public key to the target servers (Enter "yes" then the root password for each)
+ssh-copy-id root@172.31.20.40
+ssh-copy-id root@172.31.21.25
+ssh-copy-id root@172.31.31.77
+ssh-copy-id root@172.31.22.114
+# 6. Test Connectivity
+# Verify that the Ansible control node can successfully communicate with all worker nodes
+ansible -m ping all
