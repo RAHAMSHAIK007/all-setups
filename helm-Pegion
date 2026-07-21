@@ -1,0 +1,60 @@
+INSTALLATION OF HELM:
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm version
+
+
+INSTALLATION OF METRIC SERVER:
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
+
+CHARTS WEBSITE LINK: https://artifacthub.io/
+
+DOWNLOADING CHARTS PROMETHEUS & GRAFANA:
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+
+
+UPDATE HELM CHART REPOS:
+helm repo update
+helm repo list
+
+CREATE PROMETHEUS NAMESPACE:
+kubectl create namespace prometheus
+kubectl get ns
+
+INSTALL PROMETHEUS:
+helm template prometheus-community/prometheus
+
+helm install prometheus prometheus-community/prometheus --namespace prometheus --set alertmanager.persistentVolume.storageClass="gp2" --set server.persistentVolume.storageClass="gp2"
+kubectl get all -n prometheus
+
+CREATE GRAFANA NAMESPACE:
+kubectl create namespace grafana
+
+INSTALL GRAFANA:
+helm template grafana grafana/grafana
+
+helm uninstall grafana grafana/grafana --namespace grafana
+
+helm install grafana grafana/grafana --namespace grafana --set persistence.storageClassName="gp2" --set persistence.enabled=true --set adminPassword='RahamDevOps' --set  service.type=LoadBalancer
+kubectl get all -n grafana
+kubectl get svc -n grafana
+
+
+#use for kubeadm/killerkoda
+helm install grafana grafana/grafana --namespace grafana  --set adminPassword='RahamDevOps' --set  service.type=NodePort
+
+
+NOTE: ALLOW PORTS ON SG
+
+Copy the EXTERNAL-IP and paste in browser
+
+Go to Grafana Dashboard → Add the Datasource → Select the Prometheus
+add the below url in Connection and save and test
+http://prometheus-server.prometheus.svc.cluster.local/
+
+
+Import Grafana dashboard from Grafana Labs
+grafana dashboard → new → Import → 6417 → load → select prometheus → import
+
