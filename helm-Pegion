@@ -34,12 +34,8 @@ kubectl create namespace grafana
 
 INSTALL GRAFANA:
 helm template grafana grafana/grafana
-
-helm uninstall grafana grafana/grafana --namespace grafana
-
 helm install grafana grafana/grafana --namespace grafana --set persistence.storageClassName="gp2" --set persistence.enabled=true --set adminPassword='RahamDevOps' --set  service.type=LoadBalancer
 kubectl get all -n grafana
-kubectl get svc -n grafana
 
 
 #use for kubeadm/killerkoda
