@@ -15,13 +15,6 @@ kubectl get all -n argocd
 
 #EXPOSE ARGOCD SERVER:
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-yum install jq -y
-export ARGOCD_SERVER='kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname''
-echo $ARGOCD_SERVER
-kubectl get svc argocd-server -n argocd -o json | jq --raw-output .status.loadBalancer.ingress[0].hostname
+kubectl get svc -n argocd
 
-
-#TO GET ARGO CD PASSWORD:
-export ARGO_PWD='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
-echo $ARGO_PWD
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl -n argocd get secret argocd-initial-admin-secret | base64 -d; echo
