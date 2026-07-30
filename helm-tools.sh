@@ -46,7 +46,7 @@ add the below url in Connection and save and test
 http://prometheus-server.prometheus.svc.cluster.local/
 
 Import Grafana dashboard from Grafana Labs
-grafana dashboard → new → Import → 14623 → load → select prometheus → import
+grafana dashboard → new → Import → 15757 → load → select prometheus → import
 
 
 #ARGOCD INSTALLATION
